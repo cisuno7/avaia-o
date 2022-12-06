@@ -1,0 +1,114 @@
+﻿
+@{
+    ViewBag.Title = "Calculadora";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<style>
+    h1 {
+        color: crimson;
+        font-size: 9rem;
+        font-weight: bold;
+        font-family: none;
+    }
+
+    .background {
+        display: flex;
+        border-radius: 10px;
+        box-shadow: 0px 10px 20px crimson;
+        /*
+            "box-shadow" = eixo x, eixo y, transparência e cor;
+        */
+        background-color: transparent;
+        border: #bfbfbf solid 1px;
+        width: 80rem;
+        height: 80rem;
+        margin: 8rem 20rem;
+    }
+
+    body {
+        display: flex;
+    }
+
+    .items {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        margin: auto;
+    }
+
+    .top {
+        padding-bottom: 120px;
+    }
+
+    .resultado{
+        text-align: center;
+    }
+</style>
+
+<body>
+    <div class="background">
+        <div class="items">
+            <div id="top">
+                <h1>Calculadora</h1>
+            </div>
+
+            <div>
+                <h2>Digite o valor a ser calculado</h2>
+            </div>
+
+            <div class="Calcular">
+
+                <input type="number" min="0" placeholder="ValorA" id="ValorA">
+                <select type="text" placeholder="Operador" size="1" id="sinal">
+                    <option value="+">+</option>
+                    <option value="-">-</option>
+                    <option value="*">*</option>
+                    <option value="/">/</option>
+                </select>
+                <input type="number" min="0" placeholder="ValorB" id="ValorB">
+
+                <button class="btn btn-default" onclick="CalcularValor(this)">Calcular</button>
+            </div>
+            <div class="resultado">
+                <h3>Resultado</h3>
+                <h4 id="Result"></h4>
+            </div>
+            
+        </div>
+        
+    </div>
+</body>
+<script>
+    function CalcularValor(e) {
+        var a = document.querySelector('#ValorA').value;
+        var sinal = document.querySelector('#sinal').value;
+        var b = document.querySelector('#ValorB').value;
+        let Result = document.querySelector("#Result");
+        let url;
+
+        if (sinal == "+") {
+            url = '@Url.Action("Somar")';
+        } else if (sinal == "-") {
+            url = '@Url.Action("Subtrair")';
+        } else if (sinal == "*") {
+            url = '@Url.Action("Multiplicar")';
+        } else if (sinal == "/") {
+            url = '@Url.Action("Dividir")';
+        } else {
+            alert("Este operador não está disponivél")
+        }
+
+        $.get(url, {
+            ValorA: a,
+            ValorB: b
+        }).done(function (result) {
+                Result.innerHTML = result;
+            }
+        );
+
+    }
+
+</script>

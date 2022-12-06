@@ -1,0 +1,37 @@
+﻿
+@{
+    ViewBag.Title = "Upload";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div>
+    <h1>Upload</h1>
+    <input type="file" id="dataFile" name="upload" style="color: lightslategray;" />
+    <button onclick="UploadArquivo()">Exibir</button>
+    <ul id="FileList">
+
+    </ul>
+</div>
+<script>
+
+    var GlobalTeste;
+    function UploadArquivo() {
+        let url = '@Url.Action("UploadArquivo")';
+        const files = document.querySelector("#dataFile").files;
+        const List = document.querySelector("#FileList");
+        const reader = new FileReader();
+        reader.onload = (event) => {
+            let data = event.target.result;
+            $.post(url, {
+                fileContent: data,
+            }).done(function (result) {
+                let listItems = "";
+                result.forEach(function (line) {
+                        listItems += `<li>${line}</li>`;
+                });
+                List.innerHTML = listItems;
+            });
+        };
+
+        reader.readAsText(files[0]);
+    }
+</script>
