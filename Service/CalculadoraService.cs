@@ -24,15 +24,24 @@ namespace AVALIACAO.Service
 
         public int RealizarMultiplicacao(int ValorA, int ValorB)
         {
-            int Resultado = ValorA * ValorB;
+            int Resultado;
+            if (ValorB == 0)
+                Resultado = 0;
+            else if (ValorB == 1)
+                Resultado = ValorA;
+            else
+                Resultado = ValorA * ValorB;
 
             return Resultado;
         }
 
         public int RealizarDivisao(int ValorA, int ValorB)
         {
-            int Resultado = ValorA / ValorB;
-
+            int Resultado;
+            if (ValorB == 0)
+                Resultado = 0;
+            else
+                Resultado = ValorA / ValorB;
             return Resultado;
         }
     }
